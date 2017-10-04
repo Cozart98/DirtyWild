@@ -8,20 +8,27 @@ import java.util.Date;
 
 public class TripResultModel {
 
-    public Date getDepare() {
-        return depare;
+    private Date departure;
+    private String name;
+    private int price;
+
+    public TripResultModel(String name, Date departure, int price) {
+
+        this.name = name;
+        this.departure = departure;
+        this.price = price;
     }
 
-    public int getPri() {
-        return pri;
-    }
-    private String prénom;
-    private int pri;
 
-    public TripResultModel(String prénom, Date depare, int pri) {
-        this.prénom = prénom;this.depare = depare;this.pri = pri;
+    public Date getDeparture() {
+        return departure;
     }
-    private Date depare;
 
-    public String getPrénom() {return prénom;}
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 }

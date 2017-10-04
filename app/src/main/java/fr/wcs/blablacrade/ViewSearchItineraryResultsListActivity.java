@@ -16,25 +16,33 @@ public class ViewSearchItineraryResultsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_search_itinerary_results_list);
 
-        SearchRequestModel truc = getIntent().getParcelableExtra("searchRequest");
-        String text1 = truc.getDepare();
-            String TEXTEDEUX = truc.getOùilva();
-        String texte3 = truc.getQuan();
+        ListView result = (ListView) findViewById(R.id.listViewSearchResults);
 
-        Toast.makeText(this, texte3, Toast.LENGTH_LONG).show();
+        //here we use the intent and parcelable for fill the field departure, destination and date
+        SearchRequestModel searchRequestModel = getIntent().getParcelableExtra("searchRequest");
+        String departure = searchRequestModel.getDeparture();
+        String destination = searchRequestModel.getDestination();
+        String date = searchRequestModel.getDate();
 
-        setTitle(text1 + " >> " + TEXTEDEUX);
 
-        // TODO : add résult to tableau
-            ListView résultat = (ListView) findViewById(R.id.listViewSearchResults);
-            ArrayList<TripResultModel> tableau = new ArrayList<>();SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy-hh:mm");
-            try {
-                        tableau.add(new TripResultModel("Bernard", sdf.parse("21/02/2017-15:30"), 15));
-                        tableau.add(new TripResultModel("Jean-Jacques", sdf.parse("21/02/2017-16:00"), 20));
-                        tableau.add(new TripResultModel("Bertrand", sdf.parse("21/02/2017-16:30"), 16));
-                         tableau.add(new TripResultModel("Gertrude", sdf.parse("21/02/2017-17:00"), 40));
-            } catch (ParseException e) {
-            }
-        TripResultAdapter adapteur = new TripResultAdapter(this, tableau);résultat.setAdapter(adapteur);
+        Toast.makeText(this, date, Toast.LENGTH_LONG).show();
+
+        setTitle(departure + " >> " + destination);
+
+
+
+        // Now we use the adapter and the arraylist
+        ArrayList<TripResultModel> list = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy-hh:mm");
+        try {
+            list.add(new TripResultModel("Bernard", sdf.parse("21/02/2017-15:30"), 15));
+            list.add(new TripResultModel("Jean-Jacques", sdf.parse("21/02/2017-16:00"), 20));
+            list.add(new TripResultModel("Bertrand", sdf.parse("21/02/2017-16:30"), 16));
+            list.add(new TripResultModel("Gertrude", sdf.parse("21/02/2017-17:00"), 40));
+        } catch (ParseException e) {
+        }
+        TripResultAdapter adapteur = new TripResultAdapter(this, list);
+        result.setAdapter(adapteur);
     }
 }
+

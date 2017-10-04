@@ -21,61 +21,69 @@ public class SearchItineraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_itinerary);
 
-            final EditText edit1 = (EditText) findViewById(R.id.editText1);
-        final EditText edit2 = (EditText) findViewById(R.id.editText2);
-        final EditText edit3 = (EditText) findViewById(R.id.editText3);
-        Button buttonSearch = (Button) findViewById(R.id.push);
+        final EditText editDeparture = (EditText) findViewById(R.id.editTextDeparture);
+        final EditText editDestination = (EditText) findViewById(R.id.editTextDestination);
+        final EditText editDate = (EditText) findViewById(R.id.editTextDate);
+        Button buttonSearch = (Button) findViewById(R.id.buttonSearch);
 
-        // clicq action
+    //an action is added to the click for change of page but if a field is empty we make toast
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text1 = edit1.getText().toString();
-                    String text2 = edit2.getText().toString();
-                String texte = edit3.getText().toString();
+                String textDeparture = editDeparture.getText().toString();
+                String textDestination = editDestination.getText().toString();
+                String textDate = editDate.getText().toString();
 
-                if (text1.isEmpty() || text2.isEmpty()
+                if (textDeparture.isEmpty() || textDestination.isEmpty()
                         ) {
-                    Toast painGrillé = Toast.makeText(getApplicationContext(), getResources().getString(R.string.form_error), Toast.LENGTH_SHORT);
-                    painGrillé.show();
-                }else {Intent intent = new Intent(SearchItineraryActivity.this, ViewSearchItineraryResultsListActivity.class);
-                        SearchRequestModel searchRequest=new SearchRequestModel(text1, text2, texte); intent.putExtra("searchRequest", searchRequest);
+                    Toast toastChampVide = Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.form_error), Toast.LENGTH_SHORT);
+                    toastChampVide.show();
+                }else {
+                    Intent intent =
+                            new Intent(SearchItineraryActivity.this, ViewSearchItineraryResultsListActivity.class);
 
-                        SearchItineraryActivity.this.startActivity(intent);
+                    SearchRequestModel searchRequest =
+                            new SearchRequestModel(textDeparture, textDestination, textDate);
+                    intent.putExtra("searchRequest", searchRequest);
+
+                    SearchItineraryActivity.this.startActivity(intent);
                 }
             }
         });
 
-        final Calendar calandréi = Calendar.getInstance();
+        //here a calendar is incremented
+        final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
 
             @Override
-            public void onDateSet(DatePicker view,int ané,int moi,int joure){
-                        calandréi.set(Calendar.YEAR, ané);
-                        calandréi.set(Calendar.MONTH, moi);
-                    calandréi.set(Calendar.DAY_OF_MONTH, joure);
-                UpdateLabel(edit3, calandréi);
+            public void onDateSet(DatePicker view,int year,int month,int day){
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, day);
+                UpdateLabel(editDate, calendar);
             }};
-
-        edit3.setOnClickListener(new View.OnClickListener() {
+        editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(SearchItineraryActivity.this,
                         dateListener,
-                        calandréi.get(Calendar.YEAR),
-                        calandréi.get(Calendar.MONTH),
-                        calandréi.get(Calendar.DAY_OF_MONTH)
-                ).show();
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH))
+                        .show();
             }
         });
     }
 
-            private void UpdateLabel(EditText editText, Calendar myCalendar) {
-                String myFormat = "dd/MM/yyyy";
+
+    private void UpdateLabel(EditText textDate, Calendar myCalendar) {
+        String formatDate = "dd/MM/yyyy";
 
 
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+        SimpleDateFormat sdf = new SimpleDateFormat(formatDate, Locale.FRANCE);
 
-                editText.setText(sdf.format(myCalendar.getTime()));
-            }
+        //here we retrieving the selected content
+        textDate.setText(sdf.format(myCalendar.getTime()));
+    }
 }

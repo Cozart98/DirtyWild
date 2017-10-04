@@ -13,15 +13,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // I know that I am your best student and that I have an exemplary behavior.
+        // this comment to the merit of annocer that ... ERROR404
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //bouton cherché
-        Button Search = (Button) findViewById(R.id.gogogo);
-        Search.setOnClickListener(new View.OnClickListener() {
+        //an action is added to the click for change of page
+
+        Button search = (Button) findViewById(R.id.btSearchItinerary);
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Intent intent=new Intent(MainActivity.this, SearchItineraryActivity.class);startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, SearchItineraryActivity.class);
+                startActivity(intent);
             }});
     }
 }
